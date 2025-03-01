@@ -37,27 +37,35 @@ MAIL_SERVER=smtp.gmail.com
 MAIL_PORT=465
 MAIL_STARTTLS=False
 MAIL_SSL_TLS=True
-DATABASE_URL=postgresql://postgres:password@postgres_container:5432/ticket_db
+DATABASE_URL=postgresql://postgres:password@postgres_container:5432/database
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=password
+POSTGRES_DB=database
 ```
 
 ## Running the Project
 
 1. **Clone the repository:**
+
    ```sh
    git clone git@github.com:Ayalwm/customer_ticket.git
    cd customer_ticket
    ```
 
 2. **Start the containers:**
+
    ```sh
    docker compose up --build -d
    ```
+
    This will:
+
    - Start a PostgreSQL container (`postgres_container`)
    - Start the FastAPI application (`fastapi_app`)
    - Apply database migrations automatically
 
 3. **Check logs (optional):**
+
    ```sh
    docker compose logs -f
    ```
@@ -74,11 +82,13 @@ DATABASE_URL=postgresql://postgres:password@postgres_container:5432/ticket_db
 To manage database migrations inside the FastAPI container:
 
 - **Create a new migration:**
+
   ```sh
   docker compose exec fastapi_app alembic revision --autogenerate -m "migration_message"
   ```
 
 - **Apply migrations:**
+
   ```sh
   docker compose exec fastapi_app alembic upgrade head
   ```
@@ -91,11 +101,13 @@ To manage database migrations inside the FastAPI container:
 ## Stopping & Removing Containers
 
 To stop and remove all containers, volumes, and networks:
+
 ```sh
 docker compose down -v
 ```
 
 ## Notes
+
 - If you face migration issues, you can reset the migration history by deleting the `versions/` folder inside `alembic/` and dropping the `alembic_version` table in PostgreSQL:
   ```sh
   docker compose exec db psql -U postgres -d ticket_db -c "DROP TABLE IF EXISTS alembic_version;"
@@ -103,5 +115,5 @@ docker compose down -v
   Then, re-run migrations.
 
 ## License
-This project is open-source and available under the MIT License.
 
+This project is open-source and available under the MIT License.
