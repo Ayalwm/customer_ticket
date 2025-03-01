@@ -114,6 +114,8 @@ docker compose down -v
   ```
   Then, re-run migrations.
 
-## License
+## finally
 
-This project is open-source and available under the MIT License.
+Register two users with role admin and user and check the difference 
+Regular User: Can only see their own tickets.
+Admin User: Can see and update status for all tickets.
