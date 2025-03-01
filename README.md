@@ -5,6 +5,7 @@ This project is a **Support Ticketing System** built using **FastAPI** and **Pos
 ## Prerequisites
 
 Ensure you have the following installed on your system:
+
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
@@ -15,6 +16,8 @@ Ensure you have the following installed on your system:
 ├── app/                   # FastAPI application
 ├── alembic/               # Alembic migration files
 │   ├── versions/          # Migration history
+├── database.py            # Database configuration
+├── main.py                # FastAPI application entry point
 ├── Dockerfile             # Defines the FastAPI app container
 ├── docker-compose.yml     # Docker Compose configuration
 ├── alembic.ini            # Alembic configuration
@@ -34,14 +37,14 @@ MAIL_SERVER=smtp.gmail.com
 MAIL_PORT=465
 MAIL_STARTTLS=False
 MAIL_SSL_TLS=True
-DATABASE_URL = "postgresql://postgres:password@postgres_container:5432/ticket_db"
+DATABASE_URL=postgresql://postgres:password@postgres_container:5432/ticket_db
 ```
 
 ## Running the Project
 
 1. **Clone the repository:**
    ```sh
-   git clone <repo-url>
+   git clone git@github.com:Ayalwm/customer_ticket.git
    cd customer_ticket
    ```
 
@@ -99,4 +102,6 @@ docker compose down -v
   ```
   Then, re-run migrations.
 
+## License
+This project is open-source and available under the MIT License.
 
