@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Text, Enum
+from datetime import datetime
+from sqlalchemy import Column, DateTime, Integer, String, Text, Enum, func
 from database import Base
 import enum
 
@@ -23,7 +24,7 @@ class Ticket(Base):
     description = Column(Text, nullable=False)
     priority = Column(Enum(TicketPriority), default=TicketPriority.LOW)
     status = Column(Enum(TicketStatus), default=TicketStatus.OPEN)
-
+    created_at = Column(DateTime, default=func.now(), nullable=False)
 class UserRole(str, enum.Enum):
     USER = "user"
     ADMIN = "admin"

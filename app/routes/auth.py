@@ -21,6 +21,9 @@ def register_user(user_data: schemas.UserCreate, db: Session = Depends(get_db)):
     existing_user = db.query(models.User).filter(models.User.email == user_data.email).first()
     if existing_user:
         raise HTTPException(status_code=400, detail="Email already registered")
+    existing_user2 = db.query(models.User).filter(models.User.username == user_data.username).first()
+    if existing_user2:
+        raise HTTPException(status_code=400, detail="Username already taken")
 
     hashed_password = auth.hash_password(user_data.password)
     try:

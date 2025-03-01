@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException
+from datetime import date
+from typing import List, Optional
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from app import crud, schemas, models, auth
 from app.auth import get_current_user
@@ -53,3 +55,14 @@ async def update_ticket_status(
     await send_ticket_update_email(updated_ticket)
 
     return updated_ticket
+@router.get("/filtered_tickets", response_model=List[schemas.TicketResponse])
+def get_tickets(
+    status: Optional[schemas.TicketStatus] = Query(None),  # Use schema for enum validation
+    priority: Optional[schemas.TicketPriority] = Query(None),  # Use schema for enum validation
+    event_id: Optional[str] = Query(None),
+    start_date: Optional[date] = Query(None),
+    end_date: Optional[date] = Query(None),
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.get_admin_user)
+):
+    return crud.get_filtered_tickets(db, status, priority, event_id, start_date, end_date)
